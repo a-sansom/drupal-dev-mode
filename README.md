@@ -44,3 +44,13 @@ You can also run the script directly with:
 
     node node_modules/drupal-dev-mode/cli.js
 
+Output from running the command should be similar to:
+
+    ~/W/xxx> npx toggle-dev-mode
+    Uncommenting $settings['cache']['bins']['render']
+    Uncommenting $settings['cache']['bins']['page']
+    Uncommenting $settings['cache']['bins']['dynamic_page_cache']
+    Updated /Users/alex/Work/xxx/docroot/sites/development.services.yml!
+    Updated /Users/alex/Work/xxx/docroot/sites/default/settings.local.php!
+    Updated /Users/alex/Work/xxx/docroot/sites/default/settings.php! (Enable settings.local.php inclusion)
+
