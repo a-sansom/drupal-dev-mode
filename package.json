@@ -1,0 +1,18 @@
+{
+  "name": "drupal-dev-mode",
+  "version": "1.0.0",
+  "description": "Adds a CLI script to toggle Drupal 8's 'dev mode' on/off",
+  "main": "index.js",
+  "dependencies": {
+    "yaml": "^1.10.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "bin": {
+    "toggle-dev-mode": "./cli.js"
+  }
+}
