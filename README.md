@@ -29,3 +29,9 @@ an unstable state!
 sibling of the Drupal install. The package assumes this location when trying
 to find the various files to modify when running `toggle-dev-mode`.
 
+## Manually running the `toggle-dev-mode` script
+
+You can run the script idrectly with:
+
+    node node_modules/drupal-dev-mode/cli.js
+
