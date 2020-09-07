@@ -24,9 +24,9 @@ function SettingsLocalBlock() {
   // Default code block from default.settings.php file that's distributed with
   // Drupal.
   this.commented = `
-#if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
-#  include $app_root . '/' . $site_path . '/settings.local.php';
-#}
+# if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
+#   include $app_root . '/' . $site_path . '/settings.local.php';
+# }
 `
   // Uncommented version of the code block.
   this.uncommented = `
