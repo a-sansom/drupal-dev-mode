@@ -21,9 +21,7 @@ function toggleTwigDebugConfig(filePath) {
       }
 
       // Get any current values from where they should be living...
-      const reducer = function(obj, key) {
-        return obj && obj[key];
-      }
+      const reducer = (obj, key) => obj && obj[key]
       const currentDebug = ['parameters', 'twig.config', 'debug'].reduce(reducer, dataAsYaml);
       const currentAutoReload = ['parameters', 'twig.config', 'auto_reload'].reduce(reducer, dataAsYaml);
 
