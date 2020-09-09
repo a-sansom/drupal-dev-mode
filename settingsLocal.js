@@ -10,16 +10,16 @@ const fs = require('fs')
  *
  * @todo This may be able to be split out into smaller objects (especially
  * some of the setting/variable matching logic/functions?).
- *
- * @constructor
  */
-function SingleLineSettingState(data, settingAddress) {
-  this.localSettings = data
-  this.exists = null
-  this.phpVar = null
-  this.isCommented = null
-  this.isUncommented = null
-  this.commentType = null
+class SingleLineSettingState {
+  constructor(data, settingAddress) {
+    this.localSettings = data
+    this.exists = null
+    this.phpVar = null
+    this.isCommented = null
+    this.isUncommented = null
+    this.commentType = null
+  }
 
   /**
    * Determine if a Drupal settings exists in settings.local.php.
@@ -38,7 +38,7 @@ function SingleLineSettingState(data, settingAddress) {
    * @param {array} settingAddress An 'address' to a $settings variable.
    * @return {boolean} If the setting at the address exists, or not.
    */
-  this.settingExists = function (settingAddress) {
+  settingExists = function (settingAddress) {
     if (this.exists === null) {
       this.exists = !(
         this.isSettingUncommented(settingAddress) === false &&
@@ -57,7 +57,7 @@ function SingleLineSettingState(data, settingAddress) {
    * @param {array} settingAddress An 'address' to a $settings variable.
    * @return {boolean} Whether or not the setting is uncommented, or not.
    */
-  this.isSettingUncommented = function (settingAddress) {
+  isSettingUncommented = function (settingAddress) {
     if (this.isUncommented === null) {
       const pattern = this.buildVariableUncommentedMatchPattern(
         this.getSettingPhpVar(settingAddress)
@@ -78,7 +78,7 @@ function SingleLineSettingState(data, settingAddress) {
    * @param {array} settingAddress An 'address' to a $settings variable.
    * @return {boolean} Whether or not the setting is commented out, or not.
    */
-  this.isSettingCommented = function (settingAddress) {
+  isSettingCommented = function (settingAddress) {
     if (this.isCommented === null) {
       // Handle multiple types of single-line comment.
       // Drupal uses '#' out of the box in the example local settings file.
@@ -111,7 +111,7 @@ function SingleLineSettingState(data, settingAddress) {
    * @param {string} phpVar A PHP variable string Eg. $setting['x']['y']
    * @return {string} Regex pattern to match an uncommented PHP variable.
    */
-  this.buildVariableUncommentedMatchPattern = function (phpVar) {
+  buildVariableUncommentedMatchPattern = function (phpVar) {
     return '^\\s*'
       .concat(this.buildPhpVarMatchPattern(phpVar))
       .concat('$')
@@ -124,7 +124,7 @@ function SingleLineSettingState(data, settingAddress) {
    * @param {string} phpVar A PHP variable string Eg. $setting['x']['y']
    * @return {string} Regex pattern to match a commented PHP out variable.
    */
-  this.buildVariableCommentedMatchPattern = function (prefix, phpVar) {
+  buildVariableCommentedMatchPattern = function (prefix, phpVar) {
     return '^\\s*'
       // @todo Can this replace(...) go somewhere better?
       .concat(prefix.replace(/\//g, '\\/'))
@@ -142,7 +142,7 @@ function SingleLineSettingState(data, settingAddress) {
    * @param {string} phpVar A PHP variable string Eg. $setting['x']['y']
    * @return {string} Regex pattern to match the variable, and its value.
    */
-  this.buildPhpVarMatchPattern = function (phpVar) {
+  buildPhpVarMatchPattern = function (phpVar) {
     return '('
       .concat(this.escapePhpVarForRegEx(phpVar))
       .concat('\\s*=\\s*(.+);')
@@ -165,7 +165,7 @@ function SingleLineSettingState(data, settingAddress) {
    * @param {array} settingAddress Address of the Drupal setting, as an array.
    * @return {string} PHP syntax of the setting.
    */
-  this.getSettingPhpVar = function (settingAddress) {
+  getSettingPhpVar = function (settingAddress) {
     if (this.phpVar === null) {
       const prefix = '$settings'
       const arrayified = settingAddress.map(function (currentValue) {
@@ -184,7 +184,7 @@ function SingleLineSettingState(data, settingAddress) {
    * @param {string} phpVar A PHP variable string Eg. $setting['x']['y']
    * @return {string} PHP variable string escaped ready for use with regex. Eg. \\$setting\\['x']\\['y']
    */
-  this.escapePhpVarForRegEx = function (phpVar) {
+  escapePhpVarForRegEx = function (phpVar) {
     // Replace '$' with '\\$'.
     phpVar = phpVar.replace('$', '\\$')
     // Replace '[' with '\\['.
