@@ -4,52 +4,72 @@ const fs = require('fs')
 const YAML = require('yaml')
 
 /**
- * Adds a 'twig.config' section to development services YAML file.
+ * Toggle the twig.config debug settings in development.services.yml.
  * @param {string} filePath Path to development.services.yml file.
- * @param {boolean} debug Twig debugging is enabled, or not.
- * @param {boolean} autoReload Twig auto reload is enabled, or not.
  */
-function addTwigConfig(filePath, debug, autoReload) {
+function toggleTwigDebugConfig(filePath) {
   fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {
-      // Failed to load/read the file.
-      // Show why and exit.
       console.log(err)
-
       return
     }
 
-    // File was read successfully.
-    modifyDevelopmentServicesYaml(filePath, data, debug, autoReload)
+    getDevelopmentServicesAsYaml(data, (err, dataAsYaml) => {
+      if (err) {
+        console.log(err)
+        return
+      }
+
+      // Get any current values from where they should be living...
+      const reducer = function(obj, key) {
+        return obj && obj[key];
+      }
+      const currentDebug = ['parameters', 'twig.config', 'debug'].reduce(reducer, dataAsYaml);
+      const currentAutoReload = ['parameters', 'twig.config', 'auto_reload'].reduce(reducer, dataAsYaml);
+
+      // If there were already values, and those values were boolean, use them in
+      // the template we'll be toggling values in. Otherwise, we'll default to
+      // 'true' values, as, as a guess we're yet to have configured any twig
+      // debugging, so we'll be turning it on, in this pass.
+      let twigConfigTemplate = {
+        debug: (typeof currentDebug === 'boolean') ? currentDebug : true,
+        auto_reload: (typeof currentAutoReload === 'boolean') ? currentAutoReload : true
+      }
+
+      // If the current value(s) are boolean, then we want to toggle them to
+      // their opposite value. If they aren't a legitimate boolean, we'll leave
+      // things alone and stay with the defaults we previously calculated.
+      if (typeof currentDebug === 'boolean') {
+        Object.keys(twigConfigTemplate).map((objectKey, index, array) => {
+          twigConfigTemplate[objectKey] = (twigConfigTemplate[objectKey] === true) ? false : true;
+        })
+      }
+
+      dataAsYaml['parameters']['twig.config'] = twigConfigTemplate
+
+      writeDevelopmentServicesYaml(filePath, dataAsYaml)
+    })
   });
 }
 
 /**
- * Modify existing development services YAML.
- * @param {string} filePath Path to development.services.yml file.
+ * Get development.services.yml data parsed as YAML.
  * @param {string} data Development services YAML settings, as a string.
- * @param {boolean} debug Twig debugging is enabled, or not.
- * @param {boolean} autoReload Twig auto reload is enabled, or not.
+ * @param {function}callback Function to call with string of data parsed to YAML.
  */
-function modifyDevelopmentServicesYaml(filePath, data, debug, autoReload) {
-  // Got file contents, try and parse it as YAML and modify.
-  let config = {}
+function getDevelopmentServicesAsYaml(data, callback) {
+  let err = null
+  let dataAsYaml = {}
 
   try {
-    config = YAML.parse(data)
-    // @todo Change this to merge with any existing settings, not overwrite.
-    config.parameters['twig.config'] = {
-      'debug': debug,
-      'auto_reload': autoReload
-    }
+    dataAsYaml = YAML.parse(data)
   }
-  catch (err) {
+  catch (parseErr) {
     console.log(`Unable to parse ${filePath} as YAML`)
-    console.log(err)
-    return
+    err = parseErr
   }
 
-  writeDevelopmentServicesYaml(filePath, config)
+  callback(err, dataAsYaml)
 }
 
 /**
@@ -70,4 +90,4 @@ function writeDevelopmentServicesYaml(filePath, config) {
   });
 }
 
-exports.addTwigConfig = addTwigConfig
+exports.toggleTwigDebugConfig = toggleTwigDebugConfig

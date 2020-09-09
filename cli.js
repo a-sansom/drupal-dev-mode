@@ -16,12 +16,9 @@ const filePaths = drupalPaths.getFilePathsList()
 if (fileDependenciesHaveBeenMet(filePaths)) {
 
   /**
-   * Add Twig debug settings to Drupal development.services.yml.
+   * Toggle (adding, if required) Twig debug settings to Drupal development.services.yml.
    */
-  const debug = true
-  const autoReload = true
-
-  developmentServices.addTwigConfig(filePaths.developmentServicesYaml, debug, autoReload)
+  developmentServices.toggleTwigDebugConfig(filePaths.developmentServicesYaml)
 
   /**
    * Control inclusion of settings.local.php in Drupal settings.php.
