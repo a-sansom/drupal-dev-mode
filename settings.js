@@ -2,9 +2,6 @@
 
 const fs = require('fs')
 
-// @todo Are these function constructors the done thing in Node/current
-// version of javascript? Or is there a more modern/best practice way?
-
 /**
  * Define a SettingsLocalBlock object.
  *
@@ -17,23 +14,24 @@ const fs = require('fs')
  * 'strip-comments' but they don't deal with hash comments. Even if we go
  * for custom regex, we would still need to match string across multiple
  * lines, before processing.
- *
- * @constructor
  */
-function SettingsLocalBlock() {
-  // Default code block from default.settings.php file that's distributed with
-  // Drupal.
-  this.commented = `
+class SettingsLocalBlock {
+  constructor() {
+    // Default code block from default.settings.php file that's distributed
+    // with Drupal.
+    this.commented = `
 # if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
 #   include $app_root . '/' . $site_path . '/settings.local.php';
 # }
 `
-  // Uncommented version of the code block.
-  this.uncommented = `
+    // Uncommented version of the code block.
+    this.uncommented = `
 if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
   include $app_root . '/' . $site_path . '/settings.local.php';
 }
 `
+  }
+
 }
 
 /**
@@ -42,20 +40,20 @@ if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
  * @param {string} data Contents of the Drupal settings.php file.
  * @param {SettingsLocalBlock} block Representation of the state of the
  * settings.local.php inclusion code block, commented or uncommented etc.
- *
- * @constructor
  */
-function SettingsLocalBlockState(data, block) {
-  this.settings = data
-  this.block = block
-  this.isCommented = null
-  this.isUncommented = null
+class SettingsLocalBlockState {
+  constructor(data, block) {
+    this.settings = data
+    this.block = block
+    this.isCommented = null
+    this.isUncommented = null
+  }
 
-  this.isBlockFound = function () {
+  isBlockFound = function () {
     return !(this.isBlockCommented() === false && this.isBlockUncommented() === false);
   }
 
-  this.isBlockCommented = function () {
+  isBlockCommented = function () {
     if (this.isCommented === null) {
       this.isCommented = this.settings.includes(this.block.commented)
     }
@@ -63,9 +61,9 @@ function SettingsLocalBlockState(data, block) {
     return this.isCommented
   }
 
-  this.isBlockUncommented = function () {
+  isBlockUncommented = function () {
     if (this.isUncommented === null) {
-      this.isUncommented = data.includes(this.block.uncommented)
+      this.isUncommented = this.settings.includes(this.block.uncommented)
     }
 
     return this.isUncommented
