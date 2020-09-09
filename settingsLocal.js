@@ -168,7 +168,7 @@ class SingleLineSettingState {
   getSettingPhpVar = function (settingAddress) {
     if (this.phpVar === null) {
       const prefix = '$settings'
-      const arrayified = settingAddress.map(function (currentValue) {
+      const arrayified = settingAddress.map((currentValue) => {
         return "['".concat(currentValue).concat("']")
       })
 
@@ -203,11 +203,11 @@ class SingleLineSettingState {
  * @param {array} settingsAddresses List of $settings addresses to toggle.
  */
 function toggleSettingsInclusion(filePath, localSettings, settingsAddresses) {
-  settingsAddresses.forEach(function (settingAddress) {
+  settingsAddresses.forEach((settingAddress) => {
     localSettings = toggleSettingInclusion(localSettings, settingAddress)
   });
 
-  fs.writeFile(filePath, localSettings, function(err) {
+  fs.writeFile(filePath, localSettings, (err) => {
     if (err) {
       console.log(err)
       return
@@ -294,7 +294,7 @@ function toggleCachesNullifyInclusion(filePath, cacheSettingsAddresses) {
     return
   }
 
-  fs.readFile(filePath, 'utf8', function (err, data) {
+  fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {
       console.log(err)
       return

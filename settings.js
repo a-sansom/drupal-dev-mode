@@ -78,13 +78,13 @@ class SettingsLocalBlockState {
  * @param {null|SettingsLocalBlock}customBlock Null or a SettingsLocalBlock object.
  */
 function toggleSettingsLocalInclusion(filePath, customBlock = null) {
-  fs.readFile(filePath, 'utf8', function (err, data) {
+  fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {
       console.log(err)
       return
     }
 
-    getSettingsLocalBlockState(data, customBlock, function(err, blockState) {
+    getSettingsLocalBlockState(data, customBlock, (err, blockState) => {
       if (err) {
         console.log(err)
         return
@@ -107,13 +107,13 @@ function toggleSettingsLocalInclusion(filePath, customBlock = null) {
  * @param {null|SettingsLocalBlock}customBlock Null or a SettingsLocalBlock object.
  */
 function enableSettingsLocal(filePath, customBlock = null) {
-  fs.readFile(filePath, 'utf8', function (err, data) {
+  fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {
       console.log(err)
       return
     }
 
-    getSettingsLocalBlockState(data, customBlock, function(err, blockState) {
+    getSettingsLocalBlockState(data, customBlock, (err, blockState) => {
       if (err) {
         console.log(err)
         return
@@ -136,13 +136,13 @@ function enableSettingsLocal(filePath, customBlock = null) {
  * @param {null|SettingsLocalBlock} customBlock Null or a SettingsLocalBlock object.
  */
 function disableSettingsLocal(filePath, customBlock = null) {
-  fs.readFile(filePath, 'utf8', function (err, data) {
+  fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {
       console.log(err)
       return
     }
 
-    getSettingsLocalBlockState(data, customBlock, function(err, blockState) {
+    getSettingsLocalBlockState(data, customBlock, (err, blockState) => {
       if (err) {
         console.log(err)
         return
@@ -235,7 +235,7 @@ function writeSettingsWithSettingsLocalDisabled(filePath, blockState) {
  * @param {string} reason Reason for writing the file.
  */
 function writeSettings(filePath, data, reason) {
-  fs.writeFile(filePath, data, function(err) {
+  fs.writeFile(filePath, data, (err) => {
     if (err) {
       console.log(err)
       return

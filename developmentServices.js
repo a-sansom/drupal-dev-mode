@@ -10,7 +10,7 @@ const YAML = require('yaml')
  * @param {boolean} autoReload Twig auto reload is enabled, or not.
  */
 function addTwigConfig(filePath, debug, autoReload) {
-  fs.readFile(filePath, 'utf8', function (err, data) {
+  fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {
       // Failed to load/read the file.
       // Show why and exit.
@@ -60,7 +60,7 @@ function modifyDevelopmentServicesYaml(filePath, data, debug, autoReload) {
 function writeDevelopmentServicesYaml(filePath, config) {
   // NOTE: Any comments in the original files are lost! This appears to be
   // widely accepted as what happens across all YAML parsers/packages?
-  fs.writeFile(filePath, YAML.stringify(config), function(err) {
+  fs.writeFile(filePath, YAML.stringify(config), (err) => {
     if (err) {
       console.log(err)
       return
