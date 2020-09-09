@@ -83,7 +83,7 @@ class SingleLineSettingState {
       // Handle multiple types of single-line comment.
       // Drupal uses '#' out of the box in the example local settings file.
       const lineCommentPrefixes = ['#', '//']
-      const callback = function (prefix) {
+      const callback = prefix => {
         const pattern = this.buildVariableCommentedMatchPattern(
           prefix,
           this.getSettingPhpVar(settingAddress)
@@ -96,7 +96,7 @@ class SingleLineSettingState {
         }
 
         return matched
-      }.bind(this);
+      };
 
       // If *any* type of single line comment is used for the setting.
       this.isCommented = lineCommentPrefixes.some(callback)
