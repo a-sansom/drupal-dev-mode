@@ -45,10 +45,10 @@ if (fileDependenciesHaveBeenMet(filePaths)) {
  */
 function fileDependenciesHaveBeenMet(filePaths) {
   if (!filePaths.developmentServicesYaml || !filePaths.settingsPhp || !filePaths.settingsLocalPhp) {
-    console.log('Unmet dependencies for Drupal dev mode to be enabled/disabled!')
-    console.log('development.services.yml path is ' + filePaths.developmentServicesYaml)
-    console.log('settings.php path is ' + filePaths.settingsPhp)
-    console.log('settings.local.php path is ' + filePaths.settingsLocalPhp)
+    console.log('\nUnmet dependencies for Drupal dev mode to be enabled/disabled!\n')
+    console.log(`The development.services.yml path is ${filePaths.developmentServicesYaml}`)
+    console.log(`The settings.php path is ${filePaths.settingsPhp}`)
+    console.log(`The settings.local.php path is ${filePaths.settingsLocalPhp}\n`)
 
     return false
   }
