@@ -54,3 +54,5 @@ Output from running the command should be similar to:
     Updated /Users/alex/Work/xxx/docroot/sites/default/settings.local.php!
     Updated /Users/alex/Work/xxx/docroot/sites/default/settings.php! (Enable settings.local.php inclusion)
 
+You will still want to run a `drush cache:rebuild` (or `drush cr`) after
+running, to ensure changes take effect.
