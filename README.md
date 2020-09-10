@@ -27,9 +27,6 @@ mode' on. Running it a second time will toggle 'dev mode' off again.
 the box example) and moved to the `default` site directory. This package does
 not (yet) attempt to create that file, only modify it.
 
-  Running the `toggle-dev-mode` command without `settings.local.php` may leave
-the site in an unstable state!
-
 - This package should be installed in a `node_modules` folder that is a
 sibling of the Drupal install. The package assumes this location when trying
 to find the various files to modify when running `toggle-dev-mode`.
