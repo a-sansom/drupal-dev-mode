@@ -52,7 +52,13 @@ function toggleTwigDebugConfig(filePath) {
         })
       }
 
-      dataAsYaml['parameters']['twig.config'] = twigConfigTemplate
+      // Merge with existing twig.config or create it, if it doesn't exist.
+      if (getYamlValueFromPath(dataAsYaml, ['parameters', 'twig.config'])) {
+        Object.assign(dataAsYaml['parameters']['twig.config'], newTwigConfig)
+      }
+      else {
+        dataAsYaml['parameters']['twig.config'] = newTwigConfig
+      }
 
       writeDevelopmentServicesYaml(filePath, dataAsYaml)
     })
