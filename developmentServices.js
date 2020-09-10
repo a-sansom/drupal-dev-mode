@@ -20,24 +20,35 @@ function toggleTwigDebugConfig(filePath) {
         return
       }
 
-      const currentDebug = getYamlValueFromPath(dataAsYaml, ['parameters', 'twig.config', 'debug'])
-      const currentAutoReload = getYamlValueFromPath(dataAsYaml, ['parameters', 'twig.config', 'auto_reload'])
-
-      // If there were already values, and those values were boolean, use them in
-      // the template we'll be toggling values in. Otherwise, we'll default to
-      // 'true' values, as, as a guess we're yet to have configured any twig
-      // debugging, so we'll be turning it on, in this pass.
-      let twigConfigTemplate = {
-        debug: (typeof currentDebug === 'boolean') ? currentDebug : true,
-        auto_reload: (typeof currentAutoReload === 'boolean') ? currentAutoReload : true
+      let oldTwigConfig = {
+        debug: getYamlValueFromPath(dataAsYaml, ['parameters', 'twig.config', 'debug']),
+        auto_reload: getYamlValueFromPath(dataAsYaml, ['parameters', 'twig.config', 'auto_reload'])
       }
+      let newTwigConfig = {}
 
-      // If the current value(s) are boolean, then we want to toggle them to
-      // their opposite value. If they aren't a legitimate boolean, we'll leave
-      // things alone and stay with the defaults we previously calculated.
-      if (typeof currentDebug === 'boolean') {
-        Object.keys(twigConfigTemplate).map((objectKey, index, array) => {
-          twigConfigTemplate[objectKey] = (twigConfigTemplate[objectKey] === true) ? false : true
+      // If there were existing twig config values in the parsed YAML, and
+      // those values were boolean, use them in the 'new values' template
+      // we'll be using to toggle values in. Otherwise, we'll default the 'new
+      // value' to 'true', as, as a best guess, we're yet to have configured
+      // any twig debugging, so we'll be turning it on, in this run.
+      Object.keys(oldTwigConfig).map((objectKey, index, array) => {
+        let newConfigValue = true
+
+        if (typeof oldTwigConfig[objectKey] === 'boolean') {
+          newConfigValue = oldTwigConfig[objectKey]
+        }
+
+        newTwigConfig[objectKey] = newConfigValue
+      })
+
+      // If the existing twig config 'debug' value is boolean, then we want to
+      // use it as a prompt to toggle all new twig config values to their
+      // opposite (keeping the logic simple). If 'debug' isn't boolean, we'll
+      // stay with the default values we previously calculated. This could be
+      // improved, but: the complexity of the logic will get crazy.
+      if (typeof oldTwigConfig['debug'] === 'boolean') {
+        Object.keys(newTwigConfig).map((objectKey, index, array) => {
+          newTwigConfig[objectKey] = (newTwigConfig[objectKey] === true) ? false : true
         })
       }
 
