@@ -37,7 +37,7 @@ function toggleTwigDebugConfig(filePath) {
       // things alone and stay with the defaults we previously calculated.
       if (typeof currentDebug === 'boolean') {
         Object.keys(twigConfigTemplate).map((objectKey, index, array) => {
-          twigConfigTemplate[objectKey] = (twigConfigTemplate[objectKey] === true) ? false : true;
+          twigConfigTemplate[objectKey] = (twigConfigTemplate[objectKey] === true) ? false : true
         })
       }
 
@@ -69,7 +69,7 @@ function getYamlValueFromPath(yaml, path) {
 /**
  * Get development.services.yml data parsed as YAML.
  * @param {string} data Development services YAML settings, as a string.
- * @param {function}callback Function to call with string of data parsed to YAML.
+ * @param {function} callback Function to call with string of data parsed to YAML.
  */
 function getDevelopmentServicesAsYaml(data, callback) {
   let err = null
