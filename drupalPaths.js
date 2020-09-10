@@ -24,7 +24,6 @@ function getFilePathsList() {
     const sitesPath = getSitesPath(installPath)
 
     paths.developmentServicesYaml = getDevelopmentServicesFilePath(sitesPath)
-    // @todo Make setting these conditional on file existence.
     paths.settingsLocalPhp = getSettingsLocalFilePath(sitesPath)
     paths.settingsPhp = getSettingsFilePath(sitesPath)
   }
@@ -97,12 +96,18 @@ function getDevelopmentServicesFilePath(sitesPath) {
  * @return {string} Path to the (default site) 'settings.local.php' file.
  */
 function getSettingsLocalFilePath(sitesPath) {
-  // @todo This should handle non-existence of settings.local.php.
   // @todo This should be able to deal with non-default sites?
-  return sitesPath.concat(path.sep)
+  let filePath = sitesPath.concat(path.sep)
     .concat('default')
     .concat(path.sep)
     .concat('settings.local.php')
+
+  if (!fs.existsSync(filePath)) {
+    console.log(`The path ${filePath} is invalid!`)
+    filePath = false
+  }
+
+  return filePath
 }
 
 /**
@@ -115,12 +120,18 @@ function getSettingsLocalFilePath(sitesPath) {
  * @return {string} Path to the (default site) 'settings.php' file.
  */
 function getSettingsFilePath(sitesPath) {
-  // @todo This should handle non-existence of settings.php.
   // @todo This should be able to deal with non-default sites?
-  return sitesPath.concat(path.sep)
+  let filePath = sitesPath.concat(path.sep)
     .concat('default')
     .concat(path.sep)
     .concat('settings.php')
+
+  if (!fs.existsSync(filePath)) {
+    console.log(`The path ${filePath} is invalid!`)
+    filePath = false
+  }
+
+  return filePath
 }
 
 exports.getFilePathsList = getFilePathsList
