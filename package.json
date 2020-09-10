@@ -1,6 +1,6 @@
 {
   "name": "drupal-dev-mode",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Adds a CLI script to toggle Drupal 8's 'dev mode' on/off",
   "main": "index.js",
   "dependencies": {
