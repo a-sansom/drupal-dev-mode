@@ -10,9 +10,10 @@ const path = require('path')
 /**
  * Get file paths that are involved in Drupal 'dev mode'.
  *
+ * @param {string} siteName Name of Drupal site to use in file paths (multisite etc).
  * @return {object} Object with properties with either null or absolute file path values.
  */
-function getFilePathsList() {
+function getFilePathsList(siteName = 'default') {
   let paths = {
     'developmentServicesYaml': null,
     'settingsLocalPhp': null,
@@ -24,8 +25,8 @@ function getFilePathsList() {
     const sitesPath = getSitesPath(installPath)
 
     paths.developmentServicesYaml = getDevelopmentServicesFilePath(sitesPath)
-    paths.settingsLocalPhp = getSettingsLocalFilePath(sitesPath)
-    paths.settingsPhp = getSettingsFilePath(sitesPath)
+    paths.settingsLocalPhp = getSettingsLocalFilePath(sitesPath, siteName)
+    paths.settingsPhp = getSettingsFilePath(sitesPath, siteName)
   }
 
   return paths
@@ -93,12 +94,12 @@ function getDevelopmentServicesFilePath(sitesPath) {
  * created from example.settings.local.php.
  *
  * @param {string} sitesPath Drupal installation 'sites' directory path.
+ * @param {string} siteName Name of Drupal site to use in file paths (multisite etc).
  * @return {string} Path to the (default site) 'settings.local.php' file.
  */
-function getSettingsLocalFilePath(sitesPath) {
-  // @todo This should be able to deal with non-default sites?
+function getSettingsLocalFilePath(sitesPath, siteName) {
   let filePath = sitesPath.concat(path.sep)
-    .concat('default')
+    .concat(siteName)
     .concat(path.sep)
     .concat('settings.local.php')
 
@@ -117,12 +118,12 @@ function getSettingsLocalFilePath(sitesPath) {
  * created (manually, or by some other installer/configuration).
  *
  * @param {string} sitesPath Drupal installation 'sites' directory path.
+ * @param {string} siteName Name of Drupal site to use in file paths (multisite etc).
  * @return {string} Path to the (default site) 'settings.php' file.
  */
-function getSettingsFilePath(sitesPath) {
-  // @todo This should be able to deal with non-default sites?
+function getSettingsFilePath(sitesPath, siteName) {
   let filePath = sitesPath.concat(path.sep)
-    .concat('default')
+    .concat(siteName)
     .concat(path.sep)
     .concat('settings.php')
 
