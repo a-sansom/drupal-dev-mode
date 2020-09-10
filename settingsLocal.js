@@ -126,7 +126,6 @@ class SingleLineSettingState {
    */
   buildVariableCommentedMatchPattern = function (prefix, phpVar) {
     return '^\\s*'
-      // @todo Can this replace(...) go somewhere better?
       .concat(prefix.replace(/\//g, '\\/'))
       .concat('\\s*')
       .concat(this.buildPhpVarMatchPattern(phpVar))
