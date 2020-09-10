@@ -20,10 +20,8 @@ function toggleTwigDebugConfig(filePath) {
         return
       }
 
-      // Get any current values from where they should be living...
-      const reducer = (obj, key) => obj && obj[key]
-      const currentDebug = ['parameters', 'twig.config', 'debug'].reduce(reducer, dataAsYaml);
-      const currentAutoReload = ['parameters', 'twig.config', 'auto_reload'].reduce(reducer, dataAsYaml);
+      const currentDebug = getYamlValueFromPath(dataAsYaml, ['parameters', 'twig.config', 'debug'])
+      const currentAutoReload = getYamlValueFromPath(dataAsYaml, ['parameters', 'twig.config', 'auto_reload'])
 
       // If there were already values, and those values were boolean, use them in
       // the template we'll be toggling values in. Otherwise, we'll default to
@@ -48,6 +46,24 @@ function toggleTwigDebugConfig(filePath) {
       writeDevelopmentServicesYaml(filePath, dataAsYaml)
     })
   });
+}
+
+/**
+ * Get property value from object created by parsing YAML, given a property
+ * path.
+ * @param {object} yaml development.services.yml data parsed to an object.
+ * @param {array} path Path to property to get value of, as an array of strings.
+ * @return {*} Null if no value is found at given path, or the value for the path.
+ */
+function getYamlValueFromPath(yaml, path) {
+  let value = null
+
+  if (Array.isArray(path)) {
+    const reducer = (obj, key) => obj && obj[key]
+    value = path.reduce(reducer, yaml)
+  }
+
+  return value
 }
 
 /**
