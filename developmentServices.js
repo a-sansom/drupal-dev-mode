@@ -96,7 +96,7 @@ function getDevelopmentServicesAsYaml(data, callback) {
     dataAsYaml = YAML.parse(data)
   }
   catch (parseErr) {
-    console.log(`Unable to parse ${filePath} as YAML`)
+    console.log(`Unable to parse ${data} as YAML`)
     err = parseErr
   }
 
