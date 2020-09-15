@@ -40,6 +40,9 @@ function getFilePathsList(installPath, siteName = 'default') {
  * Lando-based site). Looks to see if any of the commonly named Drupal
  * directories are in existence, and returns path to the first one found.
  *
+ * @todo Provide an array param of other directory names and merge with
+ * commonInstallDirs, so that we're no longer limited to just those.
+ *
  * @return {string|null} Path the Drupal install directory, or null.
  */
 function getInstallPath() {
