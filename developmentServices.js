@@ -155,8 +155,8 @@ function writeDevelopmentServicesYaml(filePath, config) {
   });
 }
 
-exports.buildToggledTwigDebugConfig = buildToggledTwigDebugConfig
-exports.mergeTwigConfigIntoDevelopmentServices = mergeTwigConfigIntoDevelopmentServices
-exports.getYamlValueFromPath = getYamlValueFromPath
-exports.getDevelopmentServicesAsYaml = getDevelopmentServicesAsYaml
-exports.toggleTwigDebugConfig = toggleTwigDebugConfig
+module.exports.buildToggledTwigDebugConfig = buildToggledTwigDebugConfig
+module.exports.mergeTwigConfigIntoDevelopmentServices = mergeTwigConfigIntoDevelopmentServices
+module.exports.getYamlValueFromPath = getYamlValueFromPath
+module.exports.getDevelopmentServicesAsYaml = getDevelopmentServicesAsYaml
+module.exports.toggleTwigDebugConfig = toggleTwigDebugConfig

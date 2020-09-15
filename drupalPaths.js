@@ -158,6 +158,6 @@ function fileDependenciesHaveBeenMet(filePaths) {
   return true
 }
 
-exports.getInstallPath = getInstallPath
-exports.getFilePathsList = getFilePathsList
-exports.fileDependenciesHaveBeenMet = fileDependenciesHaveBeenMet
+module.exports.getInstallPath = getInstallPath
+module.exports.getFilePathsList = getFilePathsList
+module.exports.fileDependenciesHaveBeenMet = fileDependenciesHaveBeenMet
