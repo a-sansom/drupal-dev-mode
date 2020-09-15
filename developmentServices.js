@@ -155,4 +155,8 @@ function writeDevelopmentServicesYaml(filePath, config) {
   });
 }
 
+exports.buildToggledTwigDebugConfig = buildToggledTwigDebugConfig
+exports.mergeTwigConfigIntoDevelopmentServices = mergeTwigConfigIntoDevelopmentServices
+exports.getYamlValueFromPath = getYamlValueFromPath
+exports.getDevelopmentServicesAsYaml = getDevelopmentServicesAsYaml
 exports.toggleTwigDebugConfig = toggleTwigDebugConfig
