@@ -10,16 +10,16 @@ const path = require('path')
 /**
  * Get file paths that are involved in Drupal 'dev mode'.
  *
+ * @param {null|string} installPath Path to directory Drupal is installed in.
  * @param {string} siteName Name of Drupal site to use in file paths (multisite etc).
  * @return {object} Object with properties with either null or absolute file path values.
  */
-function getFilePathsList(siteName = 'default') {
+function getFilePathsList(installPath, siteName = 'default') {
   let paths = {
     'developmentServicesYaml': null,
     'settingsLocalPhp': null,
     'settingsPhp': null
   }
-  const installPath = getInstallPath()
 
   if (installPath) {
     const sitesPath = getSitesPath(installPath)
@@ -39,6 +39,9 @@ function getFilePathsList(siteName = 'default') {
  * installed in) is a sibling of the Drupal install (which is the case for our
  * Lando-based site). Looks to see if any of the commonly named Drupal
  * directories are in existence, and returns path to the first one found.
+ *
+ * @todo Provide an array param of other directory names and merge with
+ * commonInstallDirs, so that we're no longer limited to just those.
  *
  * @return {string|null} Path the Drupal install directory, or null.
  */
@@ -135,4 +138,26 @@ function getSettingsFilePath(sitesPath, siteName) {
   return filePath
 }
 
-exports.getFilePathsList = getFilePathsList
+/**
+ * Determine whether or not we've got paths to files involved in Drupal 'dev
+ * mode'.
+ *
+ * @param {object} filePaths List of Drupal file paths involved in 'dev mode'.
+ * @return {boolean} Whether all the file dependencies have been met, or not.
+ */
+function fileDependenciesHaveBeenMet(filePaths) {
+  if (!filePaths.developmentServicesYaml || !filePaths.settingsPhp || !filePaths.settingsLocalPhp) {
+    console.log('\nUnmet dependencies for Drupal dev mode to be enabled/disabled!\n')
+    console.log(`The development.services.yml path is ${filePaths.developmentServicesYaml}`)
+    console.log(`The settings.php path is ${filePaths.settingsPhp}`)
+    console.log(`The settings.local.php path is ${filePaths.settingsLocalPhp}\n`)
+
+    return false
+  }
+
+  return true
+}
+
+module.exports.getInstallPath = getInstallPath
+module.exports.getFilePathsList = getFilePathsList
+module.exports.fileDependenciesHaveBeenMet = fileDependenciesHaveBeenMet

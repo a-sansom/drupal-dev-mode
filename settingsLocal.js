@@ -303,4 +303,6 @@ function toggleCachesNullifyInclusion(filePath, cacheSettingsAddresses) {
   })
 }
 
+module.exports.SingleLineSettingState = SingleLineSettingState
+module.exports.toggleSettingInclusion = toggleSettingInclusion
 module.exports.toggleCachesNullifyInclusion = toggleCachesNullifyInclusion

@@ -245,7 +245,9 @@ function writeSettings(filePath, data, reason) {
   })
 }
 
-exports.SettingsLocalBlock = SettingsLocalBlock
-exports.toggleSettingsLocalInclusion = toggleSettingsLocalInclusion
-exports.enableSettingsLocal = enableSettingsLocal
-exports.disableSettingsLocal = disableSettingsLocal
+module.exports.getSettingsLocalBlockState = getSettingsLocalBlockState
+module.exports.SettingsLocalBlock = SettingsLocalBlock
+module.exports.SettingsLocalBlockState = SettingsLocalBlockState
+module.exports.toggleSettingsLocalInclusion = toggleSettingsLocalInclusion
+module.exports.enableSettingsLocal = enableSettingsLocal
+module.exports.disableSettingsLocal = disableSettingsLocal
