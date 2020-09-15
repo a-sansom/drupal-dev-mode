@@ -10,16 +10,16 @@ const path = require('path')
 /**
  * Get file paths that are involved in Drupal 'dev mode'.
  *
+ * @param {null|string} installPath Path to directory Drupal is installed in.
  * @param {string} siteName Name of Drupal site to use in file paths (multisite etc).
  * @return {object} Object with properties with either null or absolute file path values.
  */
-function getFilePathsList(siteName = 'default') {
+function getFilePathsList(installPath, siteName = 'default') {
   let paths = {
     'developmentServicesYaml': null,
     'settingsLocalPhp': null,
     'settingsPhp': null
   }
-  const installPath = getInstallPath()
 
   if (installPath) {
     const sitesPath = getSitesPath(installPath)
@@ -135,4 +135,26 @@ function getSettingsFilePath(sitesPath, siteName) {
   return filePath
 }
 
+/**
+ * Determine whether or not we've got paths to files involved in Drupal 'dev
+ * mode'.
+ *
+ * @param {object} filePaths List of Drupal file paths involved in 'dev mode'.
+ * @return {boolean} Whether all the file dependencies have been met, or not.
+ */
+function fileDependenciesHaveBeenMet(filePaths) {
+  if (!filePaths.developmentServicesYaml || !filePaths.settingsPhp || !filePaths.settingsLocalPhp) {
+    console.log('\nUnmet dependencies for Drupal dev mode to be enabled/disabled!\n')
+    console.log(`The development.services.yml path is ${filePaths.developmentServicesYaml}`)
+    console.log(`The settings.php path is ${filePaths.settingsPhp}`)
+    console.log(`The settings.local.php path is ${filePaths.settingsLocalPhp}\n`)
+
+    return false
+  }
+
+  return true
+}
+
+exports.getInstallPath = getInstallPath
 exports.getFilePathsList = getFilePathsList
+exports.fileDependenciesHaveBeenMet = fileDependenciesHaveBeenMet

@@ -7,13 +7,14 @@ const developmentServices = require('./developmentServices.js')
 const settings = require('./settings.js')
 const settingsLocal = require('./settingsLocal.js')
 
-const filePaths = drupalPaths.getFilePathsList()
+const installPath = drupalPaths.getInstallPath()
+const filePaths = drupalPaths.getFilePathsList(installPath)
 
 /**
  * Toggle Drupal's 'dev mode' on/off, if all dependencies to do so have been
  * met.
  */
-if (fileDependenciesHaveBeenMet(filePaths)) {
+if (drupalPaths.fileDependenciesHaveBeenMet(filePaths)) {
 
   /**
    * Toggle (adding, if required) Twig debug settings to Drupal development.services.yml.
@@ -34,24 +35,4 @@ if (fileDependenciesHaveBeenMet(filePaths)) {
     ['cache', 'bins', 'dynamic_page_cache']
   ]
   settingsLocal.toggleCachesNullifyInclusion(filePaths.settingsLocalPhp, cacheSettingsAddresses)
-}
-
-/**
- * Determine whether or not we've got paths to files involved in Drupal 'dev
- * mode'.
- *
- * @param {object} filePaths List of Drupal file paths involved in 'dev mode'.
- * @return {boolean} Whether all the file dependencies have been met, or not.
- */
-function fileDependenciesHaveBeenMet(filePaths) {
-  if (!filePaths.developmentServicesYaml || !filePaths.settingsPhp || !filePaths.settingsLocalPhp) {
-    console.log('\nUnmet dependencies for Drupal dev mode to be enabled/disabled!\n')
-    console.log(`The development.services.yml path is ${filePaths.developmentServicesYaml}`)
-    console.log(`The settings.php path is ${filePaths.settingsPhp}`)
-    console.log(`The settings.local.php path is ${filePaths.settingsLocalPhp}\n`)
-
-    return false
-  }
-
-  return true
 }
