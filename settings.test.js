@@ -1,4 +1,7 @@
-const settings = require('./settings.js');
+const dme = require('./DevModeEvents.js')
+const DevModeEvents = new dme.DevModeEvents()
+
+const settings = require('./settings.js')(DevModeEvents);
 const defaultBlockFileData = `
 # Some other code....
 

@@ -1,4 +1,7 @@
-const settingsLocal = require('./settingsLocal.js');
+const dme = require('./DevModeEvents.js')
+const DevModeEvents = new dme.DevModeEvents()
+
+const settingsLocal = require('./settingsLocal.js')(DevModeEvents);
 
 const settingsLocalFileData = `
 # Some other code...

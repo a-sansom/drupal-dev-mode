@@ -1,4 +1,7 @@
-const drupalPaths = require('./drupalPaths.js');
+const dme = require('./DevModeEvents.js')
+const DevModeEvents = new dme.DevModeEvents()
+
+const drupalPaths = require('./drupalPaths.js')(DevModeEvents);
 
 // Require fs so we can mock it's function return values.
 const fs = require('fs')

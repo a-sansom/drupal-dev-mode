@@ -1,4 +1,7 @@
-const developmentServices = require('./developmentServices.js');
+const dme = require('./DevModeEvents.js')
+const DevModeEvents = new dme.DevModeEvents()
+
+const developmentServices = require('./developmentServices.js')(DevModeEvents);
 
 describe('Parsing developmentServices YAML data', () => {
   test('Test valid YAML data behaviour', (done) => {
