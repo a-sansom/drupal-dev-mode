@@ -14,6 +14,16 @@ describe('Drupal installation path test(s)', () => {
   test('Test install path not found', () => {
     expect(drupalPaths.getInstallPath()).toBeNull();
   });
+
+  test('Test all common install dirs are checked for existence', () => {
+    const installPath = drupalPaths.getInstallPath()
+    expect(fs.existsSync.mock.calls.length).toBe(3)
+  });
+
+  test('Test all common install AND custom dirs are checked for existence', () => {
+    const installPath = drupalPaths.getInstallPath(['www-data', 'mysite'])
+    expect(fs.existsSync.mock.calls.length).toBe(5)
+  });
 });
 
 describe('Drupal "site" path tests', () => {
