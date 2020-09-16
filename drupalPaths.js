@@ -40,17 +40,15 @@ function getFilePathsList(installPath, siteName = 'default') {
  * Lando-based site). Looks to see if any of the commonly named Drupal
  * directories are in existence, and returns path to the first one found.
  *
- * @todo Provide an array param of other directory names and merge with
- * commonInstallDirs, so that we're no longer limited to just those.
- *
  * @return {string|null} Path the Drupal install directory, or null.
  */
-function getInstallPath() {
+function getInstallPath(customInstallDirs = []) {
   // @todo Maybe process.cwd might be useful here?
   const basePath = path.resolve(__dirname, '../..')
   const commonInstallDirs = ['docroot', 'drupal', 'web']
+  const installDirs = new Set(commonInstallDirs.concat(customInstallDirs))
 
-  for (const dirName of commonInstallDirs) {
+  for (const dirName of [...installDirs]) {
     const installPath = basePath.concat(path.sep)
       .concat(dirName)
 
