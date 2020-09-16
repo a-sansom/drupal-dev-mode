@@ -159,6 +159,8 @@ module.exports = function(DevModeEvents) {
    * Determine whether or not we've got paths to files involved in Drupal 'dev
    * mode'.
    *
+   * @todo Remove this. Amend tests. verifyDrupalFilePaths replaces this.
+   *
    * @param {object} filePaths List of Drupal file paths involved in 'dev mode'.
    * @return {boolean} Whether all the file dependencies have been met, or not.
    */
