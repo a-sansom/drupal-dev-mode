@@ -29,6 +29,7 @@ module.exports = function(DevModeEvents) {
         writeDevelopmentServicesYaml(filePath, dataAsYaml)
       })
     });
+  }
 
   /**
    * Build object representing 'toggled' 'twig.config' settings.
