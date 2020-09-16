@@ -155,32 +155,9 @@ module.exports = function(DevModeEvents) {
     return filePath
   }
 
-  /**
-   * Determine whether or not we've got paths to files involved in Drupal 'dev
-   * mode'.
-   *
-   * @todo Remove this. Amend tests. verifyDrupalFilePaths replaces this.
-   *
-   * @param {object} filePaths List of Drupal file paths involved in 'dev mode'.
-   * @return {boolean} Whether all the file dependencies have been met, or not.
-   */
-  function fileDependenciesHaveBeenMet(filePaths) {
-    if (!filePaths.developmentServicesYaml || !filePaths.settingsPhp || !filePaths.settingsLocalPhp) {
-      console.log('\nUnmet dependencies for Drupal dev mode to be enabled/disabled!\n')
-      console.log(`The development.services.yml path is ${filePaths.developmentServicesYaml}`)
-      console.log(`The settings.php path is ${filePaths.settingsPhp}`)
-      console.log(`The settings.local.php path is ${filePaths.settingsLocalPhp}\n`)
-
-      return false
-    }
-
-    return true
-  }
-
   return {
     getInstallPath: getInstallPath,
     getFilePathsList: getFilePathsList,
-    fileDependenciesHaveBeenMet: fileDependenciesHaveBeenMet,
     verifyDrupalFilePaths: verifyDrupalFilePaths
   }
 }

@@ -54,43 +54,57 @@ describe('Drupal "site" path tests', () => {
   });
 });
 
-// @todo In the 'refactor to use events' branch we isolate the code
-// differently, by pulling the function code out to an event handler. We
-// really should decide sooner rather than later if the events-based
-// approach is preferable.
 describe('File dependencies logic', () => {
   beforeEach(() => {
     // Mock install dir being found.
     fs.existsSync.mockReturnValue(true);
   });
 
-  test('All required file dependencies are provided', () => {
+  test('"Verify success" event emitted when ALL required file dependencies are provided', () => {
     const filePaths = {
       'developmentServicesYaml': '/development.services.yml',
       'settingsLocalPhp': '/settings.local.php',
       'settingsPhp': 'settings.php'
     }
 
-    expect(drupalPaths.fileDependenciesHaveBeenMet(filePaths)).toBe(true);
+    const handler = jest.fn()
+    DevModeEvents.on('drupalFilePathsVerifySuccess', handler)
+
+    drupalPaths.verifyDrupalFilePaths(filePaths)
+
+    expect(handler).toBeCalledTimes(1)
+    expect(handler).toBeCalledWith(filePaths)
   });
 
-  test('Some required file dependencies are provided', () => {
+  test('"Verify failure" event emitted when SOME required file dependencies are provided', () => {
     const filePaths = {
       'developmentServicesYaml': '/development.services.yml',
       'settingsLocalPhp': null,
       'settingsPhp': null
     }
 
-    expect(drupalPaths.fileDependenciesHaveBeenMet(filePaths)).toBe(false);
+    const handler = jest.fn()
+    DevModeEvents.on('drupalFilePathsVerifyFailure', handler)
+
+    drupalPaths.verifyDrupalFilePaths(filePaths)
+
+    expect(handler).toBeCalledTimes(1)
+    expect(handler).toBeCalledWith(filePaths)
   });
 
-  test('No required file dependencies are provided', () => {
+  test('"Verify failure" event emitted when NO required file dependencies are provided', () => {
     const filePaths = {
       'developmentServicesYaml': null,
       'settingsLocalPhp': null,
       'settingsPhp': null
     }
 
-    expect(drupalPaths.fileDependenciesHaveBeenMet(filePaths)).toBe(false);
+    const handler = jest.fn()
+    DevModeEvents.on('drupalFilePathsVerifyFailure', handler)
+
+    drupalPaths.verifyDrupalFilePaths(filePaths)
+
+    expect(handler).toBeCalledTimes(1)
+    expect(handler).toBeCalledWith(filePaths)
   });
 });
