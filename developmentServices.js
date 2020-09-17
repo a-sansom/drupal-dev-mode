@@ -19,7 +19,7 @@ module.exports = function(DevModeEvents) {
 
       getDevelopmentServicesAsYaml(data, (err, dataAsYaml) => {
         if (err) {
-          console.log(err)
+          dme.emit('developmentServicesParseYamlFailure', err)
           return
         }
 
@@ -133,7 +133,6 @@ module.exports = function(DevModeEvents) {
       dataAsYaml = YAML.parse(data)
     }
     catch (parseErr) {
-      console.log(`Unable to parse ${data} as YAML`)
       err = parseErr
     }
 

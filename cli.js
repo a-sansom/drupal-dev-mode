@@ -35,6 +35,10 @@ DevModeEvents.on('developmentServicesReadFailure', (err) => {
   console.log(err)
 })
 
+DevModeEvents.on('developmentServicesParseYamlFailure', (err) => {
+  console.log(err)
+})
+
 DevModeEvents.on('developmentServicesWritten', (filePath) => {
   console.log(`Updated ${filePath}`)
 
