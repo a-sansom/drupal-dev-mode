@@ -30,6 +30,11 @@ DevModeEvents.on('drupalFilePathsVerifySuccess', (filePaths) => {
   developmentServices.toggleTwigDebugConfig(filePaths.developmentServicesYaml)
 })
 
+// Handlers for developmentServices module generated events.
+DevModeEvents.on('developmentServicesReadFailure', (err) => {
+  console.log(err)
+})
+
 DevModeEvents.on('developmentServicesWritten', (filePath) => {
   console.log(`Updated ${filePath}`)
 
@@ -38,6 +43,15 @@ DevModeEvents.on('developmentServicesWritten', (filePath) => {
    */
   const filePaths = DevModeEvents.getFilePaths()
   settings.toggleSettingsLocalInclusion(filePaths.settingsPhp)
+})
+
+DevModeEvents.on('developmentServicesWriteFailure', (err) => {
+  console.log(err)
+})
+
+// Handlers for settings module generated events.
+DevModeEvents.on('settingsReadFailure', (err) => {
+  console.log(err)
 })
 
 DevModeEvents.on('settingsWritten', (filePath, reason) => {
@@ -55,12 +69,25 @@ DevModeEvents.on('settingsWritten', (filePath, reason) => {
   settingsLocal.toggleCachesNullifyInclusion(filePaths.settingsLocalPhp, cacheSettingsAddresses)
 })
 
+DevModeEvents.on('settingsWriteFailure', (err) => {
+  console.log(err)
+})
+
+// Handlers for settingsLocal module generated events.
+DevModeEvents.on('settingsLocalReadFailure', (err) => {
+  console.log(err)
+})
+
 DevModeEvents.on('settingsLocalWritten', (filePath) => {
   /**
    * When we've got this far, we're finished!
    */
   console.log(`Updated ${filePath}`)
   console.log('toggle-dev-mode is complete!')
+})
+
+DevModeEvents.on('settingsLocalWriteFailure', (err) => {
+  console.log(err)
 })
 
 /**

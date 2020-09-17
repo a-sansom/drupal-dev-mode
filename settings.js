@@ -83,7 +83,7 @@ if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
   function toggleSettingsLocalInclusion(filePath, customBlock = null) {
     fs.readFile(filePath, 'utf8', (err, data) => {
       if (err) {
-        console.log(err)
+        dme.emit('settingsReadFailure', err)
         return
       }
 
@@ -112,7 +112,7 @@ if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
   function enableSettingsLocal(filePath, customBlock = null) {
     fs.readFile(filePath, 'utf8', (err, data) => {
       if (err) {
-        console.log(err)
+        dme.emit('settingsReadFailure', err)
         return
       }
 
@@ -141,7 +141,7 @@ if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
   function disableSettingsLocal(filePath, customBlock = null) {
     fs.readFile(filePath, 'utf8', (err, data) => {
       if (err) {
-        console.log(err)
+        dme.emit('settingsReadFailure', err)
         return
       }
 
@@ -240,7 +240,7 @@ if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
   function writeSettings(filePath, data, reason) {
     fs.writeFile(filePath, data, (err) => {
       if (err) {
-        console.log(err)
+        dme.emit('settingsWriteFailure', err)
         return
       }
 

@@ -211,7 +211,7 @@ module.exports = function(DevModeEvents) {
 
     fs.writeFile(filePath, localSettings, (err) => {
       if (err) {
-        console.log(err)
+        dme.emit('settingsLocalWriteFailure', err)
         return
       }
 
@@ -298,7 +298,7 @@ module.exports = function(DevModeEvents) {
 
     fs.readFile(filePath, 'utf8', (err, data) => {
       if (err) {
-        console.log(err)
+        dme.emit('settingsLocalReadFailure', err)
         return
       }
 

@@ -13,7 +13,7 @@ module.exports = function(DevModeEvents) {
   function toggleTwigDebugConfig(filePath) {
     fs.readFile(filePath, 'utf8', (err, data) => {
       if (err) {
-        console.log(err)
+        dme.emit('developmentServicesReadFailure', err)
         return
       }
 
@@ -150,7 +150,7 @@ module.exports = function(DevModeEvents) {
     // widely accepted as what happens across all YAML parsers/packages?
     fs.writeFile(filePath, YAML.stringify(config), (err) => {
       if (err) {
-        console.log(err)
+        dme.emit('developmentServicesWriteFailure', err)
         return
       }
 
