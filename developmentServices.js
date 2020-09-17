@@ -43,6 +43,8 @@ module.exports = function(DevModeEvents) {
    * @return {object} Values for "toggled" 'twig.config' configuration
    */
   function buildToggledTwigDebugConfig(dataAsYaml) {
+    dme.addlog('Building twig.config')
+
     let newTwigConfig = {}
     let oldTwigConfig = {
       debug: getYamlValueFromPath(dataAsYaml, ['parameters', 'twig.config', 'debug']),

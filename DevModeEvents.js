@@ -5,6 +5,7 @@ class DevModeEvents extends EventEmitter {
     super(props);
 
     this.filePaths = {}
+    this.log = []
   }
 
   setFilePaths(paths) {
@@ -13,6 +14,26 @@ class DevModeEvents extends EventEmitter {
 
   getFilePaths() {
     return this.filePaths
+  }
+
+  addlog(message) {
+    this.log.push(message)
+  }
+
+  addlogs(messages) {
+    messages.forEach((line) => this.addlog(line))
+  }
+
+  getLog() {
+    return this.log
+  }
+
+  getLogForConsoleTable() {
+    return this.log.map((message) => {
+      return {
+        'Message': message
+      }
+    })
   }
 
 }

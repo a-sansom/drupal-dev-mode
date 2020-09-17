@@ -76,7 +76,7 @@ module.exports = function(DevModeEvents) {
       }
     }
 
-    console.log('Unable to find root of the Drupal installation! Unable to continue.')
+    dme.addlog('Unable to find root of the Drupal installation! Unable to continue.')
 
     return null
   }
@@ -124,7 +124,7 @@ module.exports = function(DevModeEvents) {
       .concat('settings.local.php')
 
     if (!fs.existsSync(filePath)) {
-      console.log(`The path ${filePath} is invalid!`)
+      dme.addlog(`The path ${filePath} is invalid!`)
       filePath = false
     }
 
@@ -148,7 +148,7 @@ module.exports = function(DevModeEvents) {
       .concat('settings.php')
 
     if (!fs.existsSync(filePath)) {
-      console.log(`The path ${filePath} is invalid!`)
+      dme.addlog(`The path ${filePath} is invalid!`)
       filePath = false
     }
 

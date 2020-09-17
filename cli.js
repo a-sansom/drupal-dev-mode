@@ -17,10 +17,14 @@ DevModeEvents.on('drupalFilePathsVerifyFailure', (filePaths) => {
   /**
    * Report what went wrong with the (calculated) Drupal file paths.
    */
-  console.log('\nUnmet dependencies for Drupal dev mode to be enabled/disabled!\n')
-  console.log(`The development.services.yml path is ${filePaths.developmentServicesYaml}`)
-  console.log(`The settings.php path is ${filePaths.settingsPhp}`)
-  console.log(`The settings.local.php path is ${filePaths.settingsLocalPhp}\n`)
+  DevModeEvents.addlogs([
+    'Unmet dependencies for Drupal dev mode to be enabled/disabled!',
+    `development.services.yml path is ${filePaths.developmentServicesYaml}`,
+    `settings.php path is ${filePaths.settingsPhp}`,
+    `settings.local.php path is ${filePaths.settingsLocalPhp}`
+  ])
+
+  console.table(DevModeEvents.getLogForConsoleTable())
 })
 
 DevModeEvents.on('drupalFilePathsVerifySuccess', (filePaths) => {
@@ -32,15 +36,17 @@ DevModeEvents.on('drupalFilePathsVerifySuccess', (filePaths) => {
 
 // Handlers for developmentServices module generated events.
 DevModeEvents.on('developmentServicesReadFailure', (err) => {
+  console.table(DevModeEvents.getLogForConsoleTable())
   console.log(err)
 })
 
 DevModeEvents.on('developmentServicesParseYamlFailure', (err) => {
+  console.table(DevModeEvents.getLogForConsoleTable())
   console.log(err)
 })
 
 DevModeEvents.on('developmentServicesWritten', (filePath) => {
-  console.log(`Updated ${filePath}`)
+  DevModeEvents.addlog(`Updated ${filePath}`)
 
   /**
    * Control inclusion of settings.local.php in Drupal settings.php.
@@ -50,20 +56,23 @@ DevModeEvents.on('developmentServicesWritten', (filePath) => {
 })
 
 DevModeEvents.on('developmentServicesWriteFailure', (err) => {
+  console.table(DevModeEvents.getLogForConsoleTable())
   console.log(err)
 })
 
 // Handlers for settings module generated events.
 DevModeEvents.on('settingsReadFailure', (err) => {
+  console.table(DevModeEvents.getLogForConsoleTable())
   console.log(err)
 })
 
 DevModeEvents.on('settingsSettingsLocalBlockNotFound', (err) => {
+  console.table(DevModeEvents.getLogForConsoleTable())
   console.log(err)
 })
 
 DevModeEvents.on('settingsWritten', (filePath, reason) => {
-  console.log(`Updated ${filePath} (${reason})`)
+  DevModeEvents.addlog(`Updated ${filePath}`)
 
   /**
    * Control inclusion of various cache settings in settings.local.php.
@@ -78,23 +87,24 @@ DevModeEvents.on('settingsWritten', (filePath, reason) => {
 })
 
 DevModeEvents.on('settingsWriteFailure', (err) => {
+  console.table(DevModeEvents.getLogForConsoleTable())
   console.log(err)
 })
 
 // Handlers for settingsLocal module generated events.
 DevModeEvents.on('settingsLocalReadFailure', (err) => {
+  console.table(DevModeEvents.getLogForConsoleTable())
   console.log(err)
 })
 
 DevModeEvents.on('settingsLocalWritten', (filePath) => {
-  /**
-   * When we've got this far, we're finished!
-   */
-  console.log(`Updated ${filePath}`)
-  console.log('toggle-dev-mode is complete!')
+  DevModeEvents.addlog(`Updated ${filePath}`)
+
+  console.table(DevModeEvents.getLogForConsoleTable())
 })
 
 DevModeEvents.on('settingsLocalWriteFailure', (err) => {
+  console.table(DevModeEvents.getLogForConsoleTable())
   console.log(err)
 })
 

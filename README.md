@@ -51,12 +51,18 @@ You can also run the script directly with:
 Output from running the command should be similar to:
 
     ~/W/xxx> npx toggle-dev-mode
-    Uncommenting $settings['cache']['bins']['render']
-    Uncommenting $settings['cache']['bins']['page']
-    Uncommenting $settings['cache']['bins']['dynamic_page_cache']
-    Updated /Users/alex/Work/xxx/docroot/sites/development.services.yml!
-    Updated /Users/alex/Work/xxx/docroot/sites/default/settings.local.php!
-    Updated /Users/alex/Work/xxx/docroot/sites/default/settings.php! (Enable settings.local.php inclusion)
+    ┌─────────┬────────────────────────────────────────────────────────────────────────────────┐
+    │ (index) │                                    Message                                     │
+    ├─────────┼────────────────────────────────────────────────────────────────────────────────┤
+    │    0    │                             'Building twig.config'                             │
+    │    1    │  'Updated /Users/alex/Work/xxx/docroot/sites/development.services.yml'         │
+    │    2    │                    'Enabling settings.local.php inclusion'                     │
+    │    3    │    'Updated /Users/alex/Work/xxx/docroot/sites/default/settings.php'           │
+    │    4    │              "Uncommenting $settings['cache']['bins']['render']"               │
+    │    5    │               "Uncommenting $settings['cache']['bins']['page']"                │
+    │    6    │        "Uncommenting $settings['cache']['bins']['dynamic_page_cache']"         │
+    │    7    │ 'Updated /Users/alex/Work/xxx/docroot/sites/default/settings.local.php'        │
+    └─────────┴────────────────────────────────────────────────────────────────────────────────┘
 
 You will still want to run a `drush cache:rebuild` (or `drush cr`) after
 running, to ensure changes take effect.

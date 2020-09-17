@@ -233,20 +233,20 @@ module.exports = function(DevModeEvents) {
     const phpVar = settingState.getSettingPhpVar(settingAddress)
 
     if (!settingState.settingExists(settingAddress)) {
-      console.log(`Setting ${phpVar} does not exist in settings.local.php`)
+      dme.addlog(`Setting ${phpVar} does not exist in settings.local.php`)
     }
     else if (settingState.isSettingUncommented(settingAddress)) {
-      console.log(`Commenting out ${phpVar}`)
+      dme.addlog(`Commenting out ${phpVar}`)
 
       localSettings = commentOutSetting(settingState, phpVar, localSettings)
     }
     else if (settingState.isSettingCommented(settingAddress)) {
-      console.log(`Uncommenting ${phpVar}`)
+      dme.addlog(`Uncommenting ${phpVar}`)
 
       localSettings = uncommentSetting(settingState, phpVar, localSettings)
     }
     else {
-      console.log(`Unable to determine change required for ${phpVar}`)
+      dme.addlog(`Unable to determine change required for ${phpVar}`)
     }
 
     return localSettings
@@ -292,7 +292,7 @@ module.exports = function(DevModeEvents) {
    */
   function toggleCachesNullifyInclusion(filePath, cacheSettingsAddresses) {
     if (!Array.isArray(cacheSettingsAddresses) || cacheSettingsAddresses.length < 1) {
-      console.log('No cache settings specified to toggle inclusion of!')
+      dme.addlog('No cache settings specified to toggle inclusion of!')
       return
     }
 

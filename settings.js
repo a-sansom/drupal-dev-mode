@@ -123,7 +123,7 @@ if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
         }
 
         if (blockState.isBlockUncommented()) {
-          console.log('Settings local block is already uncommented!')
+          dme.addlog('Settings local block is already uncommented!')
           return
         }
 
@@ -152,7 +152,7 @@ if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
         }
 
         if (blockState.isBlockCommented()) {
-          console.log('Settings local block is already commented out!')
+          dme.addlog('Settings local block is already commented out!')
           return
         }
 
@@ -209,6 +209,8 @@ if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
    * @param {SettingsLocalBlockState} blockState A SettingsLocalBlockState object.
    */
   function writeSettingsWithSettingsLocalEnabled(filePath, blockState) {
+    dme.addlog('Enabling settings.local.php inclusion')
+
     writeSettings(
       filePath,
       blockState.settings.replace(blockState.block.commented, blockState.block.uncommented),
@@ -223,6 +225,8 @@ if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
    * @param {SettingsLocalBlockState} blockState A SettingsLocalBlockState object.
    */
   function writeSettingsWithSettingsLocalDisabled(filePath, blockState) {
+    dme.addlog('Disabling settings.local.php inclusion')
+
     writeSettings(
       filePath,
       blockState.settings.replace(blockState.block.uncommented, blockState.block.commented),
