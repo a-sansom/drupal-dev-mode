@@ -66,3 +66,15 @@ Output from running the command should be similar to:
 
 You will still want to run a `drush cache:rebuild` (or `drush cr`) after
 running, to ensure changes take effect.
+
+## Running package tests
+
+There are a number of `Jest` tests included for the package/the packages
+separate modules. They can be run (once devDependencies are installed) all
+together, with:
+
+    npm run test
+
+Or on a per module basis. for example:
+
+    npm run test settingsLocal.test.js
