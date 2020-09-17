@@ -13,13 +13,6 @@ const settingsLocal = require('./settingsLocal.js')(DevModeEvents)
 const installPath = drupalPaths.getInstallPath()
 const filePaths = drupalPaths.getFilePathsList(installPath)
 
-DevModeEvents.on('drupalFilePathsVerifySuccess', (filePaths) => {
-  /**
-   * Toggle (adding, if required) Twig debug settings to Drupal development.services.yml.
-   */
-  developmentServices.toggleTwigDebugConfig(filePaths.developmentServicesYaml)
-})
-
 DevModeEvents.on('drupalFilePathsVerifyFailure', (filePaths) => {
   /**
    * Report what went wrong with the (calculated) Drupal file paths.
@@ -28,6 +21,13 @@ DevModeEvents.on('drupalFilePathsVerifyFailure', (filePaths) => {
   console.log(`The development.services.yml path is ${filePaths.developmentServicesYaml}`)
   console.log(`The settings.php path is ${filePaths.settingsPhp}`)
   console.log(`The settings.local.php path is ${filePaths.settingsLocalPhp}\n`)
+})
+
+DevModeEvents.on('drupalFilePathsVerifySuccess', (filePaths) => {
+  /**
+   * Toggle (adding, if required) Twig debug settings to Drupal development.services.yml.
+   */
+  developmentServices.toggleTwigDebugConfig(filePaths.developmentServicesYaml)
 })
 
 DevModeEvents.on('developmentServicesWritten', (filePath) => {
