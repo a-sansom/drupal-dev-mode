@@ -80,7 +80,7 @@ describe('Get data behaviour from valid YAML', () => {
   });
 });
 
-describe('Toggling twig.debug settings behaviour', () => {
+describe('Toggling twig.config settings behaviour', () => {
   test('Default (true) config is built', () => {
     const yaml = {
       parameters: {
