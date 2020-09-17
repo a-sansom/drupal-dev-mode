@@ -58,6 +58,10 @@ DevModeEvents.on('settingsReadFailure', (err) => {
   console.log(err)
 })
 
+DevModeEvents.on('settingsSettingsLocalBlockNotFound', (err) => {
+  console.log(err)
+})
+
 DevModeEvents.on('settingsWritten', (filePath, reason) => {
   console.log(`Updated ${filePath} (${reason})`)
 

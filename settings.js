@@ -89,7 +89,7 @@ if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
 
       getSettingsLocalBlockState(data, customBlock, (err, blockState) => {
         if (err) {
-          console.log(err)
+          dme.emit('settingsSettingsLocalBlockNotFound', err)
           return
         }
 
@@ -118,7 +118,7 @@ if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
 
       getSettingsLocalBlockState(data, customBlock, (err, blockState) => {
         if (err) {
-          console.log(err)
+          dme.emit('settingsSettingsLocalBlockNotFound', err)
           return
         }
 
@@ -147,7 +147,7 @@ if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
 
       getSettingsLocalBlockState(data, customBlock, (err, blockState) => {
         if (err) {
-          console.log(err)
+          dme.emit('settingsSettingsLocalBlockNotFound', err)
           return
         }
 
