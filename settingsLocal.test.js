@@ -12,6 +12,9 @@ const settingsLocalFileData = `
 # Some other code...
 `
 
+const fs = require('fs')
+jest.mock('fs');
+
 describe('Tests for SingleLineSettingState', () => {
   test('Test setting exists, as expected', () => {
     const settingState = new settingsLocal.SingleLineSettingState(settingsLocalFileData)
@@ -117,5 +120,77 @@ $settings['cache']['bins']['page'] = 'cache.backend.null';
 
     // Render AND page cache settings should now be commented.
     expect(received).toEqual(settingsLocalFileData)
+  })
+});
+
+describe('Test toggleSettingsInclusion events emitted', () => {
+  test('Test settingsLocalReadFailure emitted', () => {
+    fs.readFile.mockImplementation((filePath, options, callback) => {
+      callback('Non-null value to force event to be emitted', '')
+    })
+
+    const handler = jest.fn().mockName('settingsLocalReadFailureHandler')
+    DevModeEvents.on('settingsLocalReadFailure', handler)
+
+    settingsLocal.toggleCachesNullifyInclusion('/settings.local.php', ['path', 'to', 'setting'])
+
+    expect(handler).toBeCalledTimes(1)
+  })
+
+  test('Test settingsLocalWriteFailure emitted (single setting)', () => {
+    fs.writeFile.mockImplementation((filePath, config, callback) => {
+      callback('Non-null value to force event to be emitted')
+    })
+
+    const failureHandler = jest.fn().mockName('failureHandler')
+    const successHandler = jest.fn().mockName('successHandler')
+    DevModeEvents.on('settingsLocalWriteFailure', failureHandler)
+    DevModeEvents.on('settingsLocalWritten', successHandler)
+
+    const address = [['path', 'to', 'setting']]
+    settingsLocal.toggleSettingsInclusion('/settings.local.php', '', address)
+
+    expect(failureHandler).toBeCalledTimes(1)
+    expect(successHandler).toBeCalledTimes(0)
+  })
+
+  test('Test settingsLocalWriteFailure emitted (multiple settings)', () => {
+    fs.writeFile.mockImplementation((filePath, config, callback) => {
+      callback('Non-null value to force event to be emitted')
+    })
+
+    const failureHandler = jest.fn().mockName('failureHandler')
+    const successHandler = jest.fn().mockName('successHandler')
+    DevModeEvents.on('settingsLocalWriteFailure', failureHandler)
+    DevModeEvents.on('settingsLocalWritten', successHandler)
+
+    const addresses = [
+      ['path', 'to', 'setting1'],
+      ['path', 'to', 'setting2'],
+    ]
+    settingsLocal.toggleSettingsInclusion('/settings.local.php', '', addresses)
+
+    expect(failureHandler).toBeCalledTimes(1)
+    expect(successHandler).toBeCalledTimes(0)
+  })
+
+  test('Test settingsLocalWritten emitted', () => {
+    fs.writeFile.mockImplementation((filePath, config, callback) => {
+      callback(null)
+    })
+
+    const failureHandler = jest.fn().mockName('failureHandler')
+    const successHandler = jest.fn().mockName('successHandler')
+    DevModeEvents.on('settingsLocalWriteFailure', failureHandler)
+    DevModeEvents.on('settingsLocalWritten', successHandler)
+
+    const addresses = [
+      ['path', 'to', 'setting1'],
+      ['path', 'to', 'setting2'],
+    ]
+    settingsLocal.toggleSettingsInclusion('/settings.local.php', '', addresses)
+
+    expect(failureHandler).toBeCalledTimes(0)
+    expect(successHandler).toBeCalledTimes(1)
   })
 });

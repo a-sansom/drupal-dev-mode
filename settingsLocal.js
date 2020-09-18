@@ -309,6 +309,7 @@ module.exports = function(DevModeEvents) {
   return {
     SingleLineSettingState: SingleLineSettingState,
     toggleSettingInclusion: toggleSettingInclusion,
+    toggleSettingsInclusion: toggleSettingsInclusion,
     toggleCachesNullifyInclusion: toggleCachesNullifyInclusion
   }
 }

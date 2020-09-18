@@ -257,6 +257,7 @@ if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
     SettingsLocalBlock: SettingsLocalBlock,
     SettingsLocalBlockState: SettingsLocalBlockState,
     toggleSettingsLocalInclusion: toggleSettingsLocalInclusion,
+    writeSettings: writeSettings,
     enableSettingsLocal: enableSettingsLocal,
     disableSettingsLocal: disableSettingsLocal
   }

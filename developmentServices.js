@@ -164,6 +164,7 @@ module.exports = function(DevModeEvents) {
     mergeTwigConfigIntoDevelopmentServices: mergeTwigConfigIntoDevelopmentServices,
     getYamlValueFromPath: getYamlValueFromPath,
     getDevelopmentServicesAsYaml: getDevelopmentServicesAsYaml,
+    writeDevelopmentServicesYaml: writeDevelopmentServicesYaml,
     toggleTwigDebugConfig: toggleTwigDebugConfig
   }
 }
