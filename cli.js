@@ -13,6 +13,9 @@ const settingsLocal = require('./settingsLocal.js')(DevModeEvents)
 const installPath = drupalPaths.getInstallPath()
 const filePaths = drupalPaths.getFilePathsList(installPath)
 
+/**
+ * Handlers for drupalPaths module generated events.
+ */
 DevModeEvents.on('drupalFilePathsVerifyFailure', (filePaths) => {
   /**
    * Report what went wrong with the (calculated) Drupal file paths.
@@ -34,7 +37,9 @@ DevModeEvents.on('drupalFilePathsVerifySuccess', (filePaths) => {
   developmentServices.toggleTwigDebugConfig(filePaths.developmentServicesYaml)
 })
 
-// Handlers for developmentServices module generated events.
+/**
+ * Handlers for developmentServices module generated events.
+ */
 DevModeEvents.on('developmentServicesReadFailure', (err) => {
   console.table(DevModeEvents.getLogForConsoleTable())
   console.log(err)
@@ -60,7 +65,9 @@ DevModeEvents.on('developmentServicesWriteFailure', (err) => {
   console.log(err)
 })
 
-// Handlers for settings module generated events.
+/**
+ * Handlers for settings module generated events.
+ */
 DevModeEvents.on('settingsReadFailure', (err) => {
   console.table(DevModeEvents.getLogForConsoleTable())
   console.log(err)
@@ -91,7 +98,9 @@ DevModeEvents.on('settingsWriteFailure', (err) => {
   console.log(err)
 })
 
-// Handlers for settingsLocal module generated events.
+/**
+ * Handlers for settingsLocal module generated events.
+ */
 DevModeEvents.on('settingsLocalReadFailure', (err) => {
   console.table(DevModeEvents.getLogForConsoleTable())
   console.log(err)
